@@ -1,0 +1,22 @@
+#core
+system /system ext4 ro wait,slotselect,avb=vbmeta_system,logical,first_stage_mount,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
+system_ext /system_ext ext4 ro wait,slotselect,avb=vbmeta_system,logical,first_stage_mount,avb_keys=/avb/q-gsi.avbpubkey:/avb/r-gsi.avbpubkey:/avb/s-gsi.avbpubkey
+vendor /vendor ext4 ro wait,slotselect,avb,logical,first_stage_mount
+product /product ext4 ro wait,slotselect,avb,logical,first_stage_mount
+
+system                                                  /system                erofs   ro                                                                                              wait,slotselect,logical
+product                                                 /product               erofs   ro                                                                                              wait,slotselect,logical
+vendor                                                  /vendor                erofs   ro                                                                                              wait,slotselect,logical
+odm                                                     /odm                   erofs   ro                                                                                              wait,slotselect,logical
+system_ext                                              /system_ext            erofs   ro                                                                                              wait,slotselect,logical
+
+
+#data
+/dev/block/by-name/md_udc /metadata ext4 noatime,nosuid,nodev,discard wait,check,formattable,first_stage_mount
+/dev/block/by-name/userdata /data f2fs noatime,nosuid,nodev,discard,noflush_merge,fsync_mode=nobarrier,reserve_root=134217,resgid=1065,inlinecrypt wait,check,formattable,quota,latemount,resize,readahead_size_kb=512,reservedsize=128m,checkpoint=fs,fileencryption=aes-256-xts:aes-256-cts:v2,keydirectory=/metadata/vold/metadata_encryption
+
+#other
+/dev/block/by-name/persist /mnt/vendor/persist ext4 noatime,nosuid,nodev,noauto_da_alloc,commit=1,nodelalloc wait,check,formattable
+/dev/block/by-name/boot /boot emmc defaults first_stage_mount,nofail,slotselect
+/dev/block/by-name/misc /misc emmc defaults defaults
+/dev/block/by-name/vbmeta /vbmeta emmc defaults defaults
