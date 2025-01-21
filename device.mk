@@ -29,6 +29,12 @@ PRODUCT_SHIPPING_API_LEVEL := 30
 # VNDK
 PRODUCT_TARGET_VNDK_VERSION := 33
 
+# Boot Control HAL
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-service \
+    android.hardware.boot@1.2-mtkimpl \
+    android.hardware.boot@1.2-mtkimpl.recovery
+
 # Fastbootd
 PRODUCT_PACKAGES += \
     fastbootd \
